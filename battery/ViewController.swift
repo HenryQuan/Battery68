@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UIDevice.current.batteryLevel)
-        self.BatteryLabel.text = "\(UIDevice.current.batteryLevel)"
+        let battery = Int(UIDevice.current.batteryLevel * 100)
+        self.BatteryLabel.text = "\(battery)%"
     }
 
 }
