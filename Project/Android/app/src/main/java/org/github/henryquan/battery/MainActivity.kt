@@ -13,6 +13,9 @@ import org.github.henryquan.battery.Core.BatteryUtil
 class MainActivity : AppCompatActivity() {
 
     lateinit var battery: BatteryUtil
+    // Temp solution to get better estimate
+    val mah = arrayOf<Double>()
+    var curr = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +34,29 @@ class MainActivity : AppCompatActivity() {
      */
     val broadCastReceiver = object : BroadcastReceiver() {
         override fun onReceive(contxt: Context?, intent: Intent?) {
-            val level = intent?.getIntExtra("level", 0)
-            Log.d("Level", "${level}")
-            capacityLabel.text = battery.getEstimatedBatteryHealth()
+            val level = intent?.getIntExtra("level", -1)!!
+
+            if (curr == -1) {
+                curr = level
+            } else if (curr > level) {
+                // update curr
+                curr = level
+                // save current mah
+                mah.plus(battery.getCurrentCapacity())
+
+                // With only one, the result will be zero...
+                if (mah.size > 1) {
+                    // Make first element zero because it might not be accurate
+                    mah[0] = 0.0
+                    // Get average capacity per 1%,
+                    val total = mah.reduce { acc, d -> acc + d }
+                    val estimate = total / (mah.size - 1) * 100.0
+                    val max = battery.getDesignedCapacity()
+                    val percentage = String.format("%.2f", estimate / max * 100)
+
+                    capacityLabel.text = "${estimate} | ${percentage}% |${max} "
+                }
+            }
         }
     }
 }
