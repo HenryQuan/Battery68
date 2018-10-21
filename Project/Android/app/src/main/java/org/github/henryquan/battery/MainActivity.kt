@@ -45,14 +45,15 @@ class MainActivity : AppCompatActivity() {
         return 0.0
     }
 
+    /**
+     * Get current battery capacity
+     * @return current capacity
+     */
     fun getCurrentCapacity(context: Context): Double {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
-            val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
-            return chargeCounter / 1000
-        } else {
-            return 0.0
-        }
+        val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+        val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
+        val percentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
+        return chargeCounter / (percentage / 100) / 1000
     }
 
 }
