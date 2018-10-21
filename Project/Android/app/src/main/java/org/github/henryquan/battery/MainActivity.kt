@@ -12,13 +12,14 @@ import org.github.henryquan.battery.Core.BatteryUtil
 
 class MainActivity : AppCompatActivity() {
 
-    val battery = BatteryUtil(this)
+    lateinit var battery: BatteryUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // get an estimated value
+        battery = BatteryUtil(this)
         capacityLabel.text = battery.getEstimatedBatteryHealth()
 
         // add boardcast receiver to track battery level

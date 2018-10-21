@@ -30,27 +30,33 @@ class BatteryUtil(val context: Context) {
     }
 
     /**
-     * Get current battery capacity
      * @return current capacity
      */
     fun getCurrentCapacity(): Double {
-        val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
+        val chargeCounter = this.batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
         return chargeCounter / 1000
     }
 
+    /**
+     * @return current percentage
+     */
     fun getCurrentPercentage(): Double {
         val percentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
         return percentage
     }
 
+    /**
+     * Current capacity / Designed capacity to get battery health
+     * @return estimated health in string
+     */
     fun getEstimatedBatteryHealth(): String {
         val percent = this.getCurrentPercentage()
         val curr = this.getCurrentCapacity()
-        val estimate = curr / (percent / 100)
+        val estimate = String.format("%.2f",curr / (percent / 100))
         val max = this.getDesignedCapacity()
-        val percentage = String.format("%.2f", (curr / max * 100))
+        val percentage = String.format("%.2f", (curr / percent / max * 10000))
 
-        return "${curr} - ${estimate} | ${max}\n${percentage}"
+        return "${curr} (${percent}%) - ${estimate} (100%)\nMax: ${max}\nEstimated: ${percentage}%"
     }
 
 }
