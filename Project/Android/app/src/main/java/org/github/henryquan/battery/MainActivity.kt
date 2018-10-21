@@ -1,10 +1,17 @@
 package org.github.henryquan.battery
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.widget.Toast
+import java.lang.Class.*
+import android.os.Build
+
 
 
 
@@ -13,26 +20,39 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        capacityLabel.text = getBatteryCapacity()
+
+        val curr = getCurrentCapacity(this)
+        val max = getDesignedCapacity()
+        val percentage = String.format("%.2f", (curr / max * 100))
+        capacityLabel.text = "${curr} / ${max} (${percentage}%)"
     }
 
-    fun getBatteryCapacity(): String {
-        var mPowerProfile_: Any? = null
-
+    /**
+     * Get device designed capacity and convert to a string
+     * @return Unknown or Designed capacity
+     */
+    fun getDesignedCapacity(): Double {
         val POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile"
-
         try {
-            mPowerProfile_ = Class.forName(POWER_PROFILE_CLASS)
-                    .getConstructor(Context::class.java).newInstance(this)
+            val mPowerProfile_ = forName(POWER_PROFILE_CLASS).getConstructor(Context::class.java).newInstance(this)
+            val batteryCapacity = forName(POWER_PROFILE_CLASS)
+                .getMethod("getAveragePower", java.lang.String::class.java)
+                .invoke(mPowerProfile_, "battery.capacity") as Double
+            return batteryCapacity
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        return 0.0
+    }
 
-            val batteryCapacity = Class
-                    .forName(POWER_PROFILE_CLASS)
-                    .getMethod("getAveragePower", java.lang.String::class.java)
-                    .invoke(mPowerProfile_, "battery.capacity") as Double
-        return batteryCapacity.toString() + " mah"
+    fun getCurrentCapacity(context: Context): Double {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+            val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
+            return chargeCounter / 1000
+        } else {
+            return 0.0
+        }
     }
 
 }
