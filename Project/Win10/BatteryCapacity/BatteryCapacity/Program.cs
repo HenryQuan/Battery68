@@ -1,11 +1,33 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace BatteryCapacity
 {
     class Program
     {
+        const string BATTERY_REPORT = "battery-report.html";
+
         static void Main(string[] args)
+        {
+            // This might fail due to ???
+            if (GenBatteryReport())
+            {
+                // Parse the html to calculate current battery capacity
+
+                // Ask user whether he/she wants to see the complete report
+
+                // Remove report
+                File.Delete(BATTERY_REPORT);
+            }
+
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Generate system battery report and wait for it to complete
+        /// </summary>
+        static bool GenBatteryReport()
         {
             Console.WriteLine("Generating battery report...");
             var battery = new Process();
@@ -19,8 +41,17 @@ namespace BatteryCapacity
             battery.Start();
             // Wait for the report to be generated
             battery.WaitForExit();
-            Console.WriteLine("Completed");
-            Console.ReadKey();
+
+            if (File.Exists(BATTERY_REPORT))
+            {
+                Console.WriteLine("Completed");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Failed to generate report. This is for Windows 8+");
+                return false;
+            }   
         }
     }
 }
