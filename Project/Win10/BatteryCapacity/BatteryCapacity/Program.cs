@@ -14,6 +14,8 @@ namespace BatteryCapacity
             if (GenBatteryReport())
             {
                 // Parse the html to calculate current battery capacity
+                var percentage = CalcBatteryCapacity();
+                Console.WriteLine($"\n-> {percentage}%\n");
 
                 // Ask user whether he/she wants to see the complete report
                 Console.Write("Do you want to see report [y/n]: ");
@@ -26,9 +28,11 @@ namespace BatteryCapacity
 
             // Remove report
             File.Delete(BATTERY_REPORT);
-            // Exit message
-            Console.WriteLine("\nPlease any key to exit...");
-            Console.ReadKey();
+        }
+
+        static double CalcBatteryCapacity()
+        {
+            return 99.9;
         }
 
         /// <summary>
