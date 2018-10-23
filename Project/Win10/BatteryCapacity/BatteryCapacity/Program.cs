@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace BatteryCapacity
 {
@@ -6,6 +7,7 @@ namespace BatteryCapacity
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Generating battery report...");
             var battery = new Process();
             var startInfo = new ProcessStartInfo();
             // This is to hide the cmd
@@ -15,6 +17,10 @@ namespace BatteryCapacity
             startInfo.Arguments = "/C powercfg /batteryreport";
             battery.StartInfo = startInfo;
             battery.Start();
+            // Wait for the report to be generated
+            battery.WaitForExit();
+            Console.WriteLine("Completed");
+            Console.ReadKey();
         }
     }
 }
