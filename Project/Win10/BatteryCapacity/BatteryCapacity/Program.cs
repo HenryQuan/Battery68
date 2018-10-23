@@ -16,11 +16,18 @@ namespace BatteryCapacity
                 // Parse the html to calculate current battery capacity
 
                 // Ask user whether he/she wants to see the complete report
-
-                // Remove report
-                File.Delete(BATTERY_REPORT);
+                Console.Write("Do you want to see report [y/n]: ");
+                string choice = Console.ReadLine().ToLower();
+                if (choice == "y" || choice == "yes")
+                {
+                    Process.Start(BATTERY_REPORT);
+                }
             }
 
+            // Remove report
+            File.Delete(BATTERY_REPORT);
+            // Exit message
+            Console.WriteLine("\nPlease any key to exit...");
             Console.ReadKey();
         }
 
