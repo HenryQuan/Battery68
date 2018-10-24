@@ -18,8 +18,7 @@ namespace BatteryCapacity
             {
                 // Parse the html to calculate current battery capacity
                 var percentage = CalcBatteryCapacity();
-                Console.WriteLine($"\n-> {percentage}%\n");
-
+                Console.WriteLine($"\nESTIMATED -> {percentage}%\n");
                 // Ask user whether he/she wants to see the complete report
                 Console.Write("Do you want to see report [y/n]: ");
                 string choice = Console.ReadLine().ToLower();
@@ -45,9 +44,10 @@ namespace BatteryCapacity
             // Get the information we want
             var design = GetRegexMatch("DESIGN CAPACITY", html);
             var curr = GetRegexMatch("FULL CHARGE CAPACITY", html);
-            var cycle = GetRegexMatch("CYCLE COUNT", html);
+            GetRegexMatch("CYCLE COUNT", html);
 
-            return 99.9;
+            // Round to only 2 digits
+            return Math.Round(Normalise(curr) / Normalise(design) * 100, 2);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace BatteryCapacity
 
             if (File.Exists(BATTERY_REPORT))
             {
-                Console.WriteLine("Completed");
+                Console.WriteLine("Completed\n");
                 return true;
             }
             else
