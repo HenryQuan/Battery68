@@ -61,7 +61,14 @@ namespace BatteryCapacity
         /// <returns></returns>
         static string GetRegexMatch(string input, string html)
         {
-            var regex = new Regex(String.Format(REGEX_TEMPLATE, input));
+            var pattern = String.Format(REGEX_TEMPLATE, input);
+            // change the regex a little bit to match CYCLE
+            if (input.Contains("CYCLE"))
+            {
+                pattern += "<"; 
+            }
+
+            var regex = new Regex(pattern);
             var match = regex.Match(html);
             if (match.Length > 1)
             {
