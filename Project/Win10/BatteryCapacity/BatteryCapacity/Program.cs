@@ -10,7 +10,7 @@ namespace BatteryCapacity
     {
         const string BATTERY_REPORT = "battery-report.html";
         // A template for regex to get data from html
-        const string REGEX_TEMPLATE = "{0}</span></td><td>(.*?)";
+        const string REGEX_TEMPLATE = "{0}</span></td><td>(.*)";
 
         static void Main(string[] args)
         {
