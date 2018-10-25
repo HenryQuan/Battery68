@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace BatteryCapacity
 {
@@ -9,7 +10,7 @@ namespace BatteryCapacity
     {
         const string BATTERY_REPORT = "battery-report.html";
         // A template for regex to get data from html
-        const string REGEX_TEMPLATE = "{0}</span></td><td>(.*)";
+        const string REGEX_TEMPLATE = "{0}</span></td><td>(.*?)";
 
         static void Main(string[] args)
         {
@@ -25,6 +26,8 @@ namespace BatteryCapacity
                 if (choice == "y" || choice == "yes")
                 {
                     Process.Start(BATTERY_REPORT);
+                    // Wait for a while and then remove the file
+                    Thread.Sleep(1500);
                 }
             }
 
