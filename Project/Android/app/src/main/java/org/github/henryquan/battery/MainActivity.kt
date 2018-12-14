@@ -12,10 +12,9 @@ import android.widget.Toast
 import java.lang.Class.*
 import android.os.Build
 
-
-
-
 class MainActivity : AppCompatActivity() {
+
+    val savedMah = mutableListOf<Double>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         val max = getDesignedCapacity()
         val percentage = String.format("%.2f", (curr / max * 100))
         capacityLabel.text = "${curr} / ${max} (${percentage}%)"
+        currentLabel.text = "${curr}";
+
+        val batteryStatus: Unit = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
+            this.registerReceiver(null, ifilter)
+            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
@@ -53,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
         val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
         val percentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
-        return chargeCounter / (percentage / 100) / 1000
+        return chargeCounter / 1000
     }
 
 }
