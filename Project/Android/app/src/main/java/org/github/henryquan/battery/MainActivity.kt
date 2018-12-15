@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     mah[0] = 0.0
                     // Get average capacity per 1%
                     val total = mah.reduce { acc, d -> acc + d }
-                    val estimate = total / (mah.size - 1)
+                    val estimate = total / (mah.size - 1) * 100
                     val max = battery.getDesignedCapacity()
                     val percentage = String.format("%.2f", estimate / max * 100)
 
