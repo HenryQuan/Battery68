@@ -15,6 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Watch battery percentage -->
+        <receiver android:name=".BatteryPercentageReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <!-- Background service -->
+        <service
+            android:name=".BatteryService"
+            android:exported="false" />
     </application>
 
 </manifest>

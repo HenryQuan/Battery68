@@ -26,12 +26,8 @@ class MainActivity : AppCompatActivity() {
         capacityLabel.text = "${curr} / ${max} (${percentage}%)"
         currentLabel.text = "${curr}";
 
-        val batteryStatus: Unit = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
-            this.registerReceiver(null, ifilter)
-            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()
-        }
-    }
 
+    }
     /**
      * Get device designed capacity and convert to a string
      * @return Unknown or Designed capacity
