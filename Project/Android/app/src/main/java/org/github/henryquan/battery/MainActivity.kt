@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity() {
             val max = getDesignedCapacity()
             val realP = String.format("%.2f", (chargeCounter / max * 100))
             runOnUiThread {
-                capacityLabel.text = "${realP} / ${percentage} "
+                capacityLabel.text = "${realP} | ${percentage} "
                 currentLabel.text = "${chargeCounter * 1000}";
+                maxLabel.text = "${max} mah";
             }
         }
     }
@@ -48,7 +49,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        start()
+        //start()
+        val filter = IntentFilter()
+        filter.addAction(packageName + "android.intent.action.BATTERY_CHANGED")
+
+        val myReceiver = BatteryPercentageReceiver()
+        registerReceiver(myReceiver, filter)
     }
     /**
      * Get device designed capacity and convert to a string
