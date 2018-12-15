@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Receiver", "curr ${level} | ${capacity}\nsaved - ${currLevel} | ${currMah}")
 
             // Update mah from the second update
-            if (level > currLevel) {
+            if (level != currLevel) {
                 // Take absolute so that it also works without charging
                 val capacityDiff = abs(capacity - currMah)
 
