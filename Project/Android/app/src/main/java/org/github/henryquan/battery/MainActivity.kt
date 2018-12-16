@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         timer = Timer()
-        timer!!.scheduleAtFixedRate(timerTask, 0, 1000)
+        timer!!.scheduleAtFixedRate(timerTask, 0, 500)
     }
 
 
