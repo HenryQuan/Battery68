@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //start()
-        val filter = IntentFilter()
-        filter.addAction(packageName + "android.intent.action.BATTERY_CHANGED")
-
-        val myReceiver = BatteryPercentageReceiver()
-        registerReceiver(myReceiver, filter)
+        start()
+//        val filter = IntentFilter()
+//        filter.addAction(packageName + "android.intent.action.BATTERY_CHANGED")
+//
+//        val myReceiver = BatteryPercentageReceiver()
+//        registerReceiver(myReceiver, filter)
     }
     /**
      * Get device designed capacity and convert to a string
