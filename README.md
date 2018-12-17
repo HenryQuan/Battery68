@@ -9,6 +9,7 @@ It generates battery report on you Windows devices (with a battery).
 - OnePlus 5
 - Pocophone
 - Huawei Mate 10 (x)
+
 x means it does not work. This app might be available on Google Play soon.
 
 ### Backstory for IOS
