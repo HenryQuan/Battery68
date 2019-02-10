@@ -47,7 +47,7 @@ namespace BatteryCapacity
             // Get the information we want
             var design = GetRegexMatch("DESIGN CAPACITY", html);
             var curr = GetRegexMatch("FULL CHARGE CAPACITY", html);
-            GetRegexMatch("CYCLE COUNT", html);
+            var cycle = GetRegexMatch("CYCLE COUNT", html);
 
             // Round to only 2 digits
             return Math.Round(Normalise(curr) / Normalise(design) * 100, 2);
@@ -74,6 +74,12 @@ namespace BatteryCapacity
             {
                 // 1 is the macth
                 var value = match.Groups[1].ToString();
+                if (value.Contains("<"))
+                {
+                    // Remove extra info (LIFE CYCLE)
+                    value = value.Split('<')[0];
+                }
+
                 Console.WriteLine($"{input}: {value}");
                 return value;
             }
