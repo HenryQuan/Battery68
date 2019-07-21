@@ -3,7 +3,9 @@ It displays current battery percentage on your IOS devices.
 
 It displays current battery capacity on your Android devices.
 
-It generates battery report on you Windows devices (with a battery).
+It generates battery report on your Windows devices (with a battery).
+
+[BatteryBar](https://github.com/HenryQuan/BatteryBar) for your MacBooks.
 
 ## Android
 - OnePlus 5
@@ -19,5 +21,6 @@ This app is only created because of that. I hope Apple could just add it because
 ### Backstory for Android and Windows
 IOS has a build-in battery health so Android and Windows should also have one.
 
-## Mac Version??
-Maybe install Windows 10 with bootcamp and then use the windows program.
+## Mac
+~~Maybe install Windows 10 with bootcamp and then use the windows program.~~
+Mac OS doesn't even tell you how much time remaining. That's why I have to write one by myself.
