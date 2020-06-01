@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     val savedMah = mutableListOf<Double>()
 
     private var timer: Timer? = null
+    private var maxP: float = 0.0
 
     private val timerTask = object : TimerTask() {
         override fun run() {
@@ -27,9 +28,11 @@ class MainActivity : AppCompatActivity() {
             val chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble() / 1000
             val percentage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
             val max = getDesignedCapacity()
-            val realP = String.format("%.2f", (chargeCounter / max * 100))
+            val realP = chargeCounter / max * 100
+            if (realP > maxP) maxP = realP
+            val realPStr = String.format("%.2f", realP
             runOnUiThread {
-                capacityLabel.text = "${realP} | ${percentage} "
+                capacityLabel.text = "${realPStr} | ${percentage} "
                 currentLabel.text = "${chargeCounter * 1000}";
                 maxLabel.text = "${max} mah";
             }
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
         timer = Timer()
-        timer!!.scheduleAtFixedRate(timerTask, 0, 500)
+        timer!!.scheduleAtFixedRate(timerTask, 0, 100)
     }
 
 
