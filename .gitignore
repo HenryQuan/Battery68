@@ -78,6 +78,5 @@ fastlane/test_output
 iOSInjectionProject/
 
 Logo/AppIcon/
-
 Project/Android/.idea
-Project/Android/app/release/
+Project/Android/app/release
