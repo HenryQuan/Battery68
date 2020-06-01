@@ -1,3 +1,5 @@
+***It is currently under rework***
+
 # 68
 It displays current battery percentage on your IOS devices.
 
