@@ -17,7 +17,7 @@ class HomeViewModel : ViewModel() {
     fun setContext(context: Context) {
         this.context = context
         helper = BatteryHelper(context)
-        _designCapacity.value = "${helper.getDesignedCapacity()} mah"
+        _designCapacity.value = "%.0f mAh".format(helper.getDesignedCapacity())
     }
 
 }
