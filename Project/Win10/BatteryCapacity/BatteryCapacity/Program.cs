@@ -47,7 +47,7 @@ namespace BatteryCapacity
             // Get the information we want
             var design = GetRegexMatch("DESIGN CAPACITY", html);
             var curr = GetRegexMatch("FULL CHARGE CAPACITY", html);
-            var cycle = GetRegexMatch("CYCLE COUNT", html);
+            // var cycle = GetRegexMatch("CYCLE COUNT", html);
 
             // Round to only 2 digits
             return Math.Round(Normalise(curr) / Normalise(design) * 100, 2);
@@ -126,7 +126,9 @@ namespace BatteryCapacity
             }
             else
             {
-                Console.WriteLine("Failed to generate report. This is for Windows 8+");
+                Console.WriteLine("Failed to generate report. Unknown error.\nPlease check if 'powercfg /batteryreport' works.\nIt only works if this computer has a battery.");
+                // Wait for input
+                Console.ReadLine();
                 return false;
             }   
         }

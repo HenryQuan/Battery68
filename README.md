@@ -1,6 +1,6 @@
 ***It is currently under rework***
 
-# 68
+# Battery68
 It displays current battery percentage on your IOS devices.
 
 It displays current battery capacity on your Android devices.
