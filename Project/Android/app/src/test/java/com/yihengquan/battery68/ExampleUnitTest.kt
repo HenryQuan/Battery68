@@ -1,4 +1,4 @@
-package org.github.henryquan.battery
+package com.yihengquan.battery68
 
 import org.junit.Test
 
