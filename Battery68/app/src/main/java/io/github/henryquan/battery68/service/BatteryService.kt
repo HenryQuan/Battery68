@@ -16,11 +16,18 @@ class BatteryService(private val context: Context) {
     fun getDesignedCapacity(): Double? {
         val powerProfile = "com.android.internal.os.PowerProfile"
         return try {
-            val mPowerProfile = Class.forName(powerProfile).getConstructor(Context::class.java)
+            val mPowerProfile = Class.forName(powerProfile)
+                .getConstructor(Context::class.java)
                 .newInstance(this.context)
-            return Class.forName(powerProfile)
+            val rawCapacity1 = Class.forName(powerProfile)
                 .getMethod("getAveragePower", java.lang.String::class.java)
                 .invoke(mPowerProfile, "battery.capacity") as Double
+            val rawCapacity2 = Class.forName(powerProfile)
+                .getMethod("getBatteryCapacity")
+                .invoke(mPowerProfile) as Double
+
+            // return whichever larger and more than 1000
+            listOf(rawCapacity1, rawCapacity2).maxOrNull()?.takeIf { it > 1000 } ?: return null
         } catch (e: Exception) {
             null
         }
@@ -30,16 +37,18 @@ class BatteryService(private val context: Context) {
      * @return current capacity
      */
     fun getCurrentCapacity(): Double {
-        val chargeCounter =
-            batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER).toDouble()
-        return chargeCounter / 1000
+        return batteryManager
+            .getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)
+            .toDouble() / 1000
     }
 
     /**
      * @return current percentage
      */
     fun getCurrentPercentage(): Double {
-        return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY).toDouble()
+        return batteryManager
+            .getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+            .toDouble()
     }
 
     /**

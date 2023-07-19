@@ -12,12 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.henryquan.battery68.service.BatteryService
 import io.github.henryquan.battery68.ui.theme.Battery68Theme
 import io.github.henryquan.battery68.ui.view.BatteryStatusView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val capacity = BatteryService(this).getEstimatedBatteryHealth()
+        println("Designed capacity: $capacity")
         setContent {
             Battery68Theme {
                 val systemUiController = rememberSystemUiController()
