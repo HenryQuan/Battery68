@@ -80,3 +80,5 @@ iOSInjectionProject/
 Logo/AppIcon/
 Project/Android/.idea
 Project/Android/app/release
+
+.DS_Store
